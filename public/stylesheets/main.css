@@ -1,12 +1,12 @@
 body {
   
-  background: transparent url('../images/cow.jpg') 0 0 no-repeat;
-  background-color: #8da688;
+
+  background-color: #ccc;
 }
 
-#main {
+#content {
   width: 800px;
-  overflow-y: hidden;
+  height: 500px;
 }
 
 #menu {
@@ -17,18 +17,8 @@ body {
 #menu ul {
   list-style: none;
 }
+
 #menu li {
   margin-bottom: 20px;
-}
-
-#menu li a {
-  font-size: 24px;
-  text-decoration: none;
-  color: brown;
-  font-weight: 900;
-}
-
-#menu li a:hover {
-  text-decoration: underline;
 }
 
