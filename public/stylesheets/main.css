@@ -1,16 +1,13 @@
-body {
-  
-
+body {  
   background-color: #ccc;
 }
 
+
+
 #content {
-  width: 800px;
-  height: 500px;
 }
 
 #menu {
-  margin-left: 400px;
   margin-top: 100px;
 }
 
@@ -22,3 +19,18 @@ body {
   margin-bottom: 20px;
 }
 
+#players {
+  margin-top: 80px;
+}
+
+#timer {
+  margin-top: 80px;
+  font-size: 38px;
+}
+
+#timer .timer-text {
+  margin-left: 40px;
+}
+
+#game {
+}
