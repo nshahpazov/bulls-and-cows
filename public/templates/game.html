@@ -1,0 +1,34 @@
+<div id="game">
+  <!-- players section -->
+  <div id="players">
+    <ul>
+      {{#each players}}
+        <li>
+          {{this}}
+          <button id="ready-btn">Ready</button>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <!-- players section end -->
+  
+  <!-- timer section -->
+  <div id="timer">
+    <div class="timer-text">
+      <span class="minutes">
+        {{minutes}}
+      </span>
+      :
+      <span class="seconds">
+        {{seconds}}
+      </span>
+    </div>
+  </div>
+  <!-- timer section end -->
+  <input type="text" name="number-input" value="" placeholder=""></input>
+  
+  <!-- Animals -->
+  <div id="farm">
+    
+  </div>
+</div>
