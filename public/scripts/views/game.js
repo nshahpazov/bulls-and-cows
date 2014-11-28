@@ -1,8 +1,9 @@
 define(function (require) {
   'use strict';
+  
   var $ = require('jquery'),
       underscore = require('underscore'),
-      Counter = require('utilities/counter'),
+      countup = require('utils/countup'),
       Backbone = require('backbone'),
       Handlebars = require('handlebars'),
       sourceTpl = require('text!templates/game.html'),
@@ -23,36 +24,47 @@ define(function (require) {
 
     onClickReadyButton: function (e) {
       'use strict';
-      // 1. make request to see if all players are ready => start the game
-      // 2. start the game (the timer)
-      if (true) {
-        // all players are ready, hardcoded for now
-        this.startGame();
-        this.trigger('gameready');
-      }
+      this.ws.send(JSON.stringify({ready: true}));
+      // make the button inactive
     },
 
     startGame: function () {
       'use strict';
-      debugger;
-      var timerDOM = document.querySelector('#timer'),
-          counter = new Counter(timerDOM);
-          counter.start();
+     var timerDOM = $('#timer');
+
+     // definitely optimize this shit later!!!
+     timerDOM.countup(function (d, h, m, s) {
+       timerDOM.html(m + ':' + s);
+     });
     },
-  
+    
+    // refactor!
     initialize: function () {
       'use strict';
+      this.ws = new WebSocket('ws://localhost:3000');
       var that = this;
+
+      this.ws.onmessage = function (e) {
+        var res = JSON.parse(e.data);
+        
+        // create some controller for that
+        if (res.status === 'gameready') {
+          that.trigger('gameready');
+        } else {
+          if (res.status === 'gamefinished') {
+            that.trigger('gamefinished');
+          }
+        }
+      };
+      
       this.listenTo(this, 'gameready', function () {
+        // it can be bound
         that.startGame();
-        console.log('game ready event captured');
-        debugger;
       });
     },
   
     render: function () {
       'use strict';
-      debugger;
       var templ = this.template(this.model.toJSON());
       this.$el.html(templ);
       return this;
