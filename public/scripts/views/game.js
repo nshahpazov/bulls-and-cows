@@ -2,17 +2,16 @@ define(function (require) {
   'use strict';
 
   var $ = require('jquery'),
-    countup = require('utils/countup'),
-    Backbone = require('backbone'),
-    Handlebars = require('handlebars'),
-    sourceTpl = require('text!templates/game.html'),
-    template = Handlebars.compile(sourceTpl),
-    wsocket = require('socket-connection');
+      _ = require('underscore'),
+      Backbone = require('backbone'),
+      Handlebars = require('handlebars'),
+      sourceTpl = require('text!templates/game.html'),
+      template = Handlebars.compile(sourceTpl),
+      wsocket = require('socket-connection');
 
-  var GameView = Backbone.View.extend({
+  return Backbone.View.extend({
 
     tagName: 'div',
-    className: "col-md-8 col-md-offset-4",
 
     id: 'game',
 
@@ -23,58 +22,26 @@ define(function (require) {
       'keyup #numberfield': 'onKeyup'
     },
 
-    onKeyup: function (event) {
-      var value = event.target.value;
-      if (event.keyCode == 13) {
-        this.ws.send(JSON.stringify({
-          status: 'try',
-          number: value.toString()
-        }));
-      }
-    },
+    cevents: {
+      'gameready': 'onGameReady',
+      'gamefinished': 'onGameFinished',
+      'allplayers': 'onAllPlayers',
+      'gameresult': 'onGameResult'
 
-    onClickReadyButton: function (e) {
-      'use strict';
-      this.ws.send(JSON.stringify({
-        status: 'playerready'
-      }));
-    },
-
-    startGame: function () {
-      'use strict';
-      var timerDOM = $('#timer');
-      timerDOM.countup(function (d, h, m, s) {
-        timerDOM.html(m + ':' + s);
-      });
     },
 
     initialize: function () {
       'use strict';
       wsocket.connect('ws://localhost:3000', this);
       var username = prompt('Enter your name');
-
+      
+      // for proper username ussage, just send a username
       wsocket.authenticate(username);
       this.ws = wsocket.ws;
 
-      this.listenTo(this, 'gameready', this.onGameReady);
-      this.listenTo(this, 'gamefinished', this.onGameFinished);
-      this.listenTo(this, 'allplayers', this.onAllPlayers);
-      this.listenTo(this, 'gameresult', this.onGameResult);
-    },
-
-    onGameResult: function (data) {
-      console.log(data.result);
-    },
-
-    onGameReady: function () {
-      'use strict';
-      $('#numberfield').prop('disabled', false);
-      this.startGame();
-    },
-
-    onAllPlayers: function (data) {
-      this.model.set('players', data.players);
-      this.render();
+      _.each(this.cevents, function (handler, ev) {
+        this.listenTo(this, ev, this[handler]);
+      }, this);
     },
 
     render: function () {
@@ -82,8 +49,54 @@ define(function (require) {
       var templ = this.template(this.model.toJSON());
       this.$el.html(templ);
       return this;
+    },
+    
+    // sends data with a status
+    send: function (status, data) {
+      this.ws.send(JSON.stringify(_.extend({
+        status: status
+      }, data)));
+    },
+
+    // Event handler catching when enter is typed on the input, so that result is sent 
+    onKeyup: function (event) {
+      if (event.keyCode == 13) {
+        this.send('check', {
+          number: $('#numberfield').val()
+        });
+      }
+    },
+
+    // Event handler for ready clicking
+    onClickReadyButton: function () {
+      'use strict';
+      this.send('playerready');
+    },
+
+    // Huston, we've got a winner
+    onGameFinished: function (data) {
+      'use strict';
+      alert('Winner is ' + data.winner);
+      $('#numberfield').prop('disabled', true);
+    },  
+
+    // Some results for the current player are sent
+    onGameResult: function (data) {
+      console.log(data.result);
+    },
+
+    // Event Handler for when game is ready to be started
+    onGameReady: function () {
+      'use strict';
+      $('#numberfield').prop('disabled', false);
+    },
+    
+    // Event Handler for when players are updated
+    // must be optimized to newplayer and playerready event
+    onAllPlayers: function (data) {
+      'use strict';
+      this.model.set('players', data.players);
+      this.render();
     }
   });
-
-  return GameView;
 });
