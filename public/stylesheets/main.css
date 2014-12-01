@@ -34,3 +34,11 @@ body {
 
 #game {
 }
+
+#players .ready {
+  color: green;
+}
+
+#players .notready {
+  color: red;
+}
