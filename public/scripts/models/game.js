@@ -1,11 +1,12 @@
 define(function (require) {
   'use strict';
+
   var Backbone = require('backbone');
-  
+
   return Backbone.Model.extend({
     defaults: {
-      players: ['Nikola Shahpazov'],
-      isStarted: false,
+      players: [],
+      disabled: true,
       minutes: 0,
       seconds: 0,
       cows: 0,
