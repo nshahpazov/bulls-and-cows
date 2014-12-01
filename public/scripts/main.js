@@ -6,9 +6,7 @@ require.config({
   paths: {
     // tries to load jQuery from Google's CDN first and falls back
     // to load locally
-    "jquery": ["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min",
-      "libraries/jquery/jquery"
-    ],
+    "jquery": "libraries/jquery/dist/jquery",
     "handlebars": "libraries/handlebars/handlebars",
     "underscore": "libraries/underscore/underscore-min",
     "backbone": "libraries/backbone/backbone",
