@@ -4,19 +4,28 @@
     <ul>
       {{#each players}}
         <li>
-          {{this}}
-          <button id="ready-btn">Ready</button>
+          <span>{{this.username}}</span>
+          
+            {{#if this.ready}} 
+              <span class="ready">Ready</span>
+            {{else}}
+              <span class="notready">Not Ready</span>
+            {{/if}}
         </li>
       {{/each}}
     </ul>
   </div>
   <!-- players section end -->
   
+  <div id="ready-form">
+    <button id="ready-button">Ready</button>
+  </div>
+
   <!-- timer section -->
   <div id="timer"></div>
   <!-- timer section end -->
-  <input type="text" name="number-input" value="" placeholder=""></input>
-  
+  <input type="text" id="numberfield" value="" placeholder="" disabled="{{disabled}}"></input>
+  <button id="send-button"></button> 
   <!-- Animals -->
   <div id="farm">
     
