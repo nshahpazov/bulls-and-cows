@@ -44,10 +44,8 @@ $.fn.countup = function (cb, prop) {
     s = passed;
     updateDuo(6, 7, s);
 
-    // Calling an optional user supplied callback
     options.callback(d, h, m, s);
 
-    // Scheduling another call of this function in 1s
     setTimeout(tick, 1000);
   })();
 
@@ -56,8 +54,6 @@ $.fn.countup = function (cb, prop) {
     //switchDigit(positions.eq(minor), Math.floor(value / 10) % 10);
     //switchDigit(positions.eq(major), value % 10);
   }
-
   return this;
 };
-
 });
