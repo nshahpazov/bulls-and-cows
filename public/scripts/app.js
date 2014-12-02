@@ -18,10 +18,6 @@ define(function (require) {
       'click #start-game-button': 'onClickStartGame'
     },
 
-    render: function () {
-      'use strict';
-    },
-
     onClickStartGame: function () {
       'use strict';
       var game = new GameModel(),
