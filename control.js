@@ -27,20 +27,21 @@ module.exports = function (wss, ws) {
 
       // Event Handlers for particular messages
       onCheck: function (data) {
+        'use strict';
         var result = game.bully(data.number);
+        ws.send(JSON.stringify({
+          status: 'gameresult',
+          result: result
+        }));
 
         if (result.bulls === 4) {
           sendAll('gamefinished', {
             winner: ws.username
           });
-        } else {
-          ws.send(JSON.stringify({
-            status: 'gameresult',
-            result: result
-          }));
-        }
+        } 
       },
-
+      
+      // When a particular player is ready
       onPlayerReady: function () {
         'use strict';
         ws.ready = true;
@@ -62,13 +63,15 @@ module.exports = function (wss, ws) {
       },
 
       onAuthenticate: function (data) {
+        'use strict';
+        console.log('here');
         ws.username = data.username;
-        sendAll({
+        sendAll('allplayers', {
            status: 'allplayers',                         
            players: wss.clients.map(function (client) {
              return _.pick(client, 'username', 'ready');
            })
-        });     
+        });
       }
     }
   };
