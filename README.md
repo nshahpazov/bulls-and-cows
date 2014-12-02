@@ -24,10 +24,16 @@ Things to do:
 
 #Summary
  project  : bulls-and-cows
- repo age : 6 days
- active   : 5 days
- commits  : 75
- files    : 21
- authors  : 
+
+repo age : 6 days
+
+active   : 5 days
+
+commits  : 75
+
+files    : 21
+
+authors  : 
+
     75	Nikola Shahpazov  100.0%
 
