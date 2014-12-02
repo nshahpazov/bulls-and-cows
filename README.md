@@ -6,11 +6,14 @@ A bulls and cows game with web sockets
 #Deployment
 
 to start the web socket server:
-    node lib/server.js
+    
+node lib/server.js
 
 to server the static content
+  
   in public dir
-    python -m SimpleHTTPServer
+    
+  python -m SimpleHTTPServer
 
   or you can use apache or whatever server for the static content
 
