@@ -1,14 +1,20 @@
-body {  
-  background-color: #ccc;
+body {
+  background: skyblue;
 }
 
 
-
-#content {
+.start-page {
+  background: url('/images/background.jpg') 0 0 no-repeat;
+  width: 700px;
+  height: 398px;
+  margin: 100px 260px;
+  border: 1px solid #444;
+  border-radius: 16px;
 }
 
 #menu {
-  margin-top: 100px;
+  margin-top: 40px;
+  margin-left: 200px;
 }
 
 #menu ul {
@@ -19,20 +25,69 @@ body {
   margin-bottom: 20px;
 }
 
+#menu li a,
+.button {
+  text-decoration: none;
+  color: #000;
+  line-height: 24px;
+  height: 24px;
+  text-align: center;
+  display: inline-block;
+  width: 9em;
+  border: 1px solid #000;
+  border-radius: 16px;
+}
+
+#menu li a:hover {
+  background-color: white;
+}
+
+/**************** GAME STYLESHEET ************************/
+#game {
+  background: skyblue none 0 0 no-repeat;
+  height: 820px;
+  width: 940px;
+}
+
+#ready-button {
+  background-color: #ddd;
+}
+
 #players {
   margin-top: 80px;
+  margin-right: 100px;
+  float: right;
+  display: block;
 }
 
-#timer {
-  margin-top: 80px;
-  font-size: 38px;
+#players:after {
+  clear: both;
+  content: "";
+  height: 0;
+  display: block;
 }
 
-#timer .timer-text {
-  margin-left: 40px;
+#play-section {
+  clear: both;
+  margin-top: 260px;
+  margin-left: 300px;
+
 }
 
-#game {
+#numberfield {
+  margin-top: 20px;
+  height: 38px;
+  font-size: 24px;
+  border-radius: 16px;
+  padding-left: 8px;
+}
+
+#players ul {
+  list-style: none;
+}
+
+#players li {
+  font-size: 24px;
 }
 
 #players .ready {
@@ -40,5 +95,10 @@ body {
 }
 
 #players .notready {
-  color: red;
+  color: #ff3300;
+  font-weight: bold;
+}
+
+#farm {
+  margin-top: 10px;
 }
