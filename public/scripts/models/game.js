@@ -6,11 +6,11 @@ define(function (require) {
   return Backbone.Model.extend({
     defaults: {
       players: [],
-      disabled: true,
+      ready: false,
       minutes: 0,
       seconds: 0,
-      cows: 0,
-      bulls: 0
+      cows: [],
+      bulls: []
     }
   });
 });
