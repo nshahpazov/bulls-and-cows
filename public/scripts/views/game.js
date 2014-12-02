@@ -7,8 +7,9 @@ define(function (require) {
       Handlebars = require('handlebars'),
       sourceTpl = require('text!templates/game.html'),
       template = Handlebars.compile(sourceTpl),
-      wsocket = require('socket-connection');
+      wsocket = require('socket-connection'),
 
+      lastValue;
   return Backbone.View.extend({
 
     tagName: 'div',
@@ -27,15 +28,13 @@ define(function (require) {
       'gamefinished': 'onGameFinished',
       'allplayers': 'onAllPlayers',
       'gameresult': 'onGameResult'
-
     },
 
     initialize: function () {
       'use strict';
       wsocket.connect('ws://localhost:3000', this);
       var username = prompt('Enter your name');
-      
-      // for proper username ussage, just send a username
+ 
       wsocket.authenticate(username);
       this.ws = wsocket.ws;
 
@@ -53,6 +52,7 @@ define(function (require) {
     
     // sends data with a status
     send: function (status, data) {
+      'use strict';
       this.ws.send(JSON.stringify(_.extend({
         status: status
       }, data)));
@@ -60,10 +60,12 @@ define(function (require) {
 
     // Event handler catching when enter is typed on the input, so that result is sent 
     onKeyup: function (event) {
-      if (event.keyCode == 13) {
+      var number = $('#numberfield').val();
+      if (event.keyCode == 13 && this.model.get('ready')) {
         this.send('check', {
-          number: $('#numberfield').val()
+          number: number
         });
+        lastValue = number;
       }
     },
 
@@ -76,19 +78,32 @@ define(function (require) {
     // Huston, we've got a winner
     onGameFinished: function (data) {
       'use strict';
+      this.model.set('ready', false);
       alert('Winner is ' + data.winner);
-      $('#numberfield').prop('disabled', true);
     },  
-
+    
     // Some results for the current player are sent
     onGameResult: function (data) {
-      console.log(data.result);
+      'use strict';
+      this.updateFarm(data);
+    },
+    
+    updateFarm: function (data) {
+      'use strict';
+      var res = data.result;
+      this.model.set('bulls', _.range(0, res.bulls));
+      this.model.set('cows', _.range(0, res.cows));
+      this.render();
+      $('#numberfield').val(lastValue);
+      $('#numberfield').focus();
     },
 
     // Event Handler for when game is ready to be started
     onGameReady: function () {
+      this.model.set('ready', true);
+      // $('#ready-button').hide();
+      $('#numberfield').focus();
       'use strict';
-      $('#numberfield').prop('disabled', false);
     },
     
     // Event Handler for when players are updated
