@@ -60,6 +60,7 @@ define(function (require) {
 
     // Event handler catching when enter is typed on the input, so that result is sent 
     onKeyup: function (event) {
+      'use strict';
       var number = $('#numberfield').val();
       if (event.keyCode == 13 && this.model.get('ready')) {
         this.send('check', {
@@ -72,7 +73,9 @@ define(function (require) {
     // Event handler for ready clicking
     onClickReadyButton: function () {
       'use strict';
-      this.send('playerready');
+      if (!this.model.get('ready')) {
+        this.send('playerready');
+      }
     },
 
     // Huston, we've got a winner
