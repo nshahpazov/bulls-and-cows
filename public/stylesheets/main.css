@@ -51,6 +51,12 @@ body {
 
 #ready-button {
   background-color: #ddd;
+  height: 24px;
+
+}
+
+#ready-button:hover {
+  background-color: #aaa;
 }
 
 #players {
