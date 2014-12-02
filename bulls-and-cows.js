@@ -1,4 +1,6 @@
-var _ = require('lodash');
+/**
+** BullsAndCows Constructor
+**/
 
 function BullsAndCows(str) {
   'use strict';
@@ -21,7 +23,6 @@ BullsAndCows.generate = function (n) {
 
 BullsAndCows.prototype.bully = function (number) {
   'use strict';
-  // try with a regex later
   var result = {
     bulls: 0,
     cows: 0
@@ -37,5 +38,4 @@ BullsAndCows.prototype.bully = function (number) {
 
   return result;
 };
-
 module.exports = BullsAndCows;
