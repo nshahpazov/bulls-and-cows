@@ -1,5 +1,6 @@
 <div id="game">
   <!-- players section -->
+
   <div id="players">
     <ul>
       {{#each players}}
@@ -16,18 +17,23 @@
     </ul>
   </div>
   <!-- players section end -->
-  
-  <div id="ready-form">
-    <button id="ready-button">Ready</button>
-  </div>
+  <div id="play-section">
+    <div id="ready-form">
+      <a class="button" href="#" id="ready-button">Ready</a>
+    </div>
 
-  <!-- timer section -->
-  <div id="timer"></div>
-  <!-- timer section end -->
-  <input type="text" id="numberfield" value="" placeholder="" disabled="{{disabled}}"></input>
-  <button id="send-button"></button> 
-  <!-- Animals -->
-  <div id="farm">
-    
+    <input type="text" autofocus="true" id="numberfield">
+    </input> 
+    <!-- Animals -->
+    <div id="farm">
+      {{#each bulls}}
+        <img src="images/bull.png" width="128" height="128"></img>
+      {{/each}}
+
+      {{#each cows}}
+         <img src="images/cow.png" width="128" height="128"></img>
+      {{/each}}
+
+    </div>
   </div>
 </div>
